@@ -1,7 +1,3 @@
-Here’s your complete and updated `README.md` file tailored to your tech stack: **React frontend**, **Spring Boot backend**, and **Python microservices** — with all current details included.
-
----
-
 ```markdown
 # 🛒 Panama Online Store – Semi-Dropshipping eCommerce Platform
 

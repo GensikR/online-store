@@ -87,7 +87,7 @@ const Footer: React.FC = () => {
         <div className="py-6 border-t border-stone-200 text-center">
           <p className="font-sans text-sm text-stone-500">
             {/* FIX 2: Replaced ' with &apos; */}
-            &copy; {new Date().getFullYear()} LOLASS Store. All Rights Reserved.
+            &copy; {new Date().getFullYear()} LOLASS. All Rights Reserved.
           </p>
         </div>
       </div>

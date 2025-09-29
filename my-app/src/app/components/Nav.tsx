@@ -73,7 +73,7 @@ const Nav: React.FC = () => {
                 src="/images/logo.png"
                 alt="Lolla's Store Logo"
                 width={80}
-                height={80}
+                height={85}
                 priority
               />
             </Link>

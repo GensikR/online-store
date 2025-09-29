@@ -5,6 +5,8 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { Product } from "@/data/products";
 import { useCart } from "@/app/context/CartContext";
+import { useRouter } from "next/navigation";
+
 type Props = {
   product: Product;
   onClose: () => void;
@@ -30,7 +32,7 @@ const CartIcon = () => (
 const ProductView: React.FC<Props> = ({ product, onClose }) => {
   const [activeImage, setActiveImage] = useState(product.images[0]);
   const detailPoints = product.details.split(",");
-
+  const router = useRouter();
   const { addToCart } = useCart();
 
   return (
@@ -77,7 +79,12 @@ const ProductView: React.FC<Props> = ({ product, onClose }) => {
                   transition={{ duration: 0.2 }}
                   className="absolute inset-0"
                 >
-                  <Image src={activeImage} alt={product.title} layout="fill" className="object-cover" />
+                  <Image
+                    src={activeImage}
+                    alt={product.title}
+                    fill
+                    className="object-cover rounded-xl"
+                  />
                 </motion.div>
               </AnimatePresence>
             </div>
@@ -92,7 +99,7 @@ const ProductView: React.FC<Props> = ({ product, onClose }) => {
                     activeImage === img ? "ring-2 ring-[#d1b49f] ring-offset-2" : "hover:opacity-80"
                   }`}
                 >
-                  <Image src={img} alt="Thumbnail" layout="fill" className="object-cover" />
+                  <Image src={img} alt="Thumbnail" fill className="object-cover rounded-md" />
                 </button>
               ))}
             </div>
@@ -135,7 +142,13 @@ const ProductView: React.FC<Props> = ({ product, onClose }) => {
               </button>
 
               {/* Buy Now */}
-              <button className="w-full border border-gray-300 px-6 py-3 rounded-lg font-semibold text-gray-700 hover:bg-gray-100 transition">
+              <button
+                onClick={() => {
+                  addToCart(product);
+                  router.push("/checkout");
+                }}
+                className="w-full border border-gray-300 px-6 py-3 rounded-lg font-semibold text-gray-700 hover:bg-gray-100 transition"
+              >
                 Buy Now
               </button>
             </div>

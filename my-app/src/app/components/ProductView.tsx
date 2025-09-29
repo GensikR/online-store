@@ -3,16 +3,8 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-
-type Product = {
-  id: number;
-  title: string;
-  desc: string;
-  details: string;
-  images: string[];
-  price: string;
-};
-
+import { Product } from "@/data/products";
+import { useCart } from "@/app/context/CartContext";
 type Props = {
   product: Product;
   onClose: () => void;
@@ -27,13 +19,19 @@ const CartIcon = () => (
     stroke="currentColor"
     strokeWidth={2}
   >
-    <path strokeLinecap="round" strokeLinejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
+    />
   </svg>
 );
 
 const ProductView: React.FC<Props> = ({ product, onClose }) => {
   const [activeImage, setActiveImage] = useState(product.images[0]);
   const detailPoints = product.details.split(",");
+
+  const { addToCart } = useCart();
 
   return (
     <div
@@ -48,12 +46,19 @@ const ProductView: React.FC<Props> = ({ product, onClose }) => {
         exit={{ opacity: 0, y: 20 }}
         transition={{ duration: 0.3 }}
       >
-        {/* --- Top-left Back Button (always visible) --- */}
+        {/* Top-left Back Button */}
         <button
           onClick={onClose}
           className="absolute left-4 top-4 z-10 flex items-center gap-2 text-gray-700 hover:text-gray-900 font-semibold"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={2}
+          >
             <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
           </svg>
           Back
@@ -62,7 +67,6 @@ const ProductView: React.FC<Props> = ({ product, onClose }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 mt-6">
           {/* --- Image Gallery --- */}
           <div className="flex flex-col gap-4">
-            {/* Main Image */}
             <div className="relative aspect-square w-full rounded-xl overflow-hidden">
               <AnimatePresence mode="wait">
                 <motion.div
@@ -77,6 +81,7 @@ const ProductView: React.FC<Props> = ({ product, onClose }) => {
                 </motion.div>
               </AnimatePresence>
             </div>
+
             {/* Thumbnails */}
             <div className="grid grid-cols-4 gap-4">
               {product.images.map((img) => (
@@ -120,10 +125,16 @@ const ProductView: React.FC<Props> = ({ product, onClose }) => {
             </ul>
 
             <div className="mt-auto flex flex-col gap-4">
-              <button className="flex w-full items-center justify-center bg-[#d1b49f] text-white px-6 py-3 rounded-lg font-semibold text-base transition-transform hover:scale-105">
+              {/* Add to Cart */}
+              <button
+                onClick={() => addToCart(product)}
+                className="flex w-full items-center justify-center bg-[#d1b49f] text-white px-6 py-3 rounded-lg font-semibold text-base transition-transform hover:scale-105"
+              >
                 <CartIcon />
                 Add to Cart
               </button>
+
+              {/* Buy Now */}
               <button className="w-full border border-gray-300 px-6 py-3 rounded-lg font-semibold text-gray-700 hover:bg-gray-100 transition">
                 Buy Now
               </button>
@@ -131,7 +142,7 @@ const ProductView: React.FC<Props> = ({ product, onClose }) => {
           </div>
         </div>
 
-        {/* --- Mobile Bottom Close Button --- */}
+        {/* Mobile Close Button */}
         <button
           onClick={onClose}
           className="mt-6 w-full md:hidden bg-gray-200 text-gray-800 py-3 rounded-lg font-semibold hover:bg-gray-300 transition"

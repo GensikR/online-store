@@ -10,8 +10,8 @@ interface LandingHeroProps {
 const LandingHero: React.FC<LandingHeroProps> = ({
   storeName = "Lolla's Store",
   tagline = "Your personal source for the latest viral looks. We hand-pick the must-have clothes and purses from the biggest trend sites so you don't have to.",
-  phoneNumberHref = "+15551234567",
-  phoneNumberDisplay = "(555) 123-4567",
+  phoneNumberHref = "+12145517710",
+  phoneNumberDisplay = "(214) 551-7710",
 }) => {
   const prefilledMessage =
     "Hi Lolla! I'm interested in an item from your store.";

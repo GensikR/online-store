@@ -4,7 +4,7 @@ import React from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "../context/CartContext";
-import Link from "next/link";
+import { useRouter } from "next/navigation"; // added router
 
 // --- SVG Icons ---
 const CloseIcon = () => (
@@ -38,6 +38,7 @@ type Props = {
 
 const CartSidebar: React.FC<Props> = ({ isOpen, onClose }) => {
   const { state, dispatch } = useCart();
+  const router = useRouter(); // added router
 
   const subtotal = state.items.reduce(
     (sum, item) => sum + Number(item.price.toString().replace("$", "")) * item.quantity,
@@ -46,6 +47,11 @@ const CartSidebar: React.FC<Props> = ({ isOpen, onClose }) => {
 
   const freeShippingThreshold = 100;
   const progressPercentage = Math.min((subtotal / freeShippingThreshold) * 100, 100);
+
+  const handleCheckout = () => {
+    onClose(); // close sidebar
+    router.push("/checkout"); // navigate to checkout
+  };
 
   return (
     <AnimatePresence>
@@ -83,31 +89,20 @@ const CartSidebar: React.FC<Props> = ({ isOpen, onClose }) => {
                   <ShoppingBagIcon />
                   <p className="mt-4 text-lg font-medium text-gray-800">Your cart is empty</p>
                   <p className="mt-2 text-gray-500">Looks like you haven&apos;t added anything yet.</p>
-                  <Link
-                    href="/"
-                    onClick={onClose}
-                    className="mt-6 px-6 py-2 rounded-md bg-[#d1b49f] text-white font-semibold transition-transform hover:scale-105"
-                  >
-                    Start Shopping
-                  </Link>
                 </div>
               ) : (
                 <div className="divide-y divide-gray-200">
                   {state.items.map((item) => (
                     <div key={item.id} className="flex flex-col sm:flex-row items-center sm:items-start gap-4 py-5">
-                      {/* Product Image */}
                       <div className="relative w-20 h-24 rounded-lg overflow-hidden flex-shrink-0">
                         <Image src={item.images[0]} alt={item.title} fill className="object-cover" />
                       </div>
-
-                      {/* Info + Quantity */}
                       <div className="flex-1 w-full flex flex-col sm:flex-row sm:items-center justify-between">
                         <div className="flex-1">
                           <h3 className="font-semibold text-gray-800">{item.title}</h3>
                           <p className="text-lg font-bold text-[#d1b49f] mt-1">{formatPrice(item.price)}</p>
                         </div>
 
-                        {/* Quantity Controls */}
                         <div className="flex items-center gap-2 mt-3 sm:mt-0">
                           <button
                             onClick={() => dispatch({ type: "DECREASE_QTY", payload: item.id })}
@@ -124,15 +119,13 @@ const CartSidebar: React.FC<Props> = ({ isOpen, onClose }) => {
                           >
                             +
                           </button>
+                          <button
+                            onClick={() => dispatch({ type: "REMOVE_ITEM", payload: item.id })}
+                            className="text-gray-400 hover:text-red-500 transition-colors ml-4 flex-shrink-0"
+                          >
+                            <TrashIcon />
+                          </button>
                         </div>
-
-                        {/* Trash Button */}
-                        <button
-                          onClick={() => dispatch({ type: "REMOVE_ITEM", payload: item.id })}
-                          className="text-gray-400 hover:text-red-500 transition-colors mt-3 sm:mt-0 sm:ml-4 flex-shrink-0"
-                        >
-                          <TrashIcon />
-                        </button>
                       </div>
                     </div>
                   ))}
@@ -143,7 +136,6 @@ const CartSidebar: React.FC<Props> = ({ isOpen, onClose }) => {
             {/* Footer */}
             {state.items.length > 0 && (
               <div className="p-5 border-t border-gray-200 bg-gray-50">
-                {/* Free Shipping Progress */}
                 <div className="mb-4">
                   <p className="text-sm text-center text-gray-600 mb-2">
                     {subtotal >= freeShippingThreshold
@@ -163,7 +155,11 @@ const CartSidebar: React.FC<Props> = ({ isOpen, onClose }) => {
                   <span>{formatPrice(subtotal)}</span>
                 </div>
 
-                <button className="w-full bg-[#d1b49f] text-white py-3 rounded-lg font-semibold text-base transition-transform hover:scale-105 shadow-sm hover:shadow-md">
+                {/* Checkout Button */}
+                <button
+                  onClick={handleCheckout} // navigate to checkout
+                  className="w-full bg-[#d1b49f] text-white py-3 rounded-lg font-semibold text-base transition-transform hover:scale-105 shadow-sm hover:shadow-md"
+                >
                   Proceed to Checkout
                 </button>
               </div>

@@ -1,6 +1,6 @@
-import LandingHero from "./components/LandingHero";
-import Nav from "./components/Nav";
-import ProductsReel from "./components/ProductsReel";
+import LandingHero from "./components/front/LandingHero";
+import Nav from "./components/front/Nav";
+import ProductsReel from "./components/front/ProductsReel";
 
 export default function Home() {
   return (

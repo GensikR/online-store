@@ -3,7 +3,7 @@
 import React, { use } from "react";
 import { useRouter } from "next/navigation";
 import { products } from "@/data/products";
-import ProductView from "../../components/ProductView";
+import ProductView from "../../components/front/ProductView";
 
 type Props = {
   params: Promise<{ id: string }>; // params is now a Promise

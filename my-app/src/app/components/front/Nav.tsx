@@ -3,8 +3,8 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import CartSidebar from "@/app/components/CartSidebar";
-import { useCart } from "../context/CartContext";
+import CartSidebar from "@/app/components/front/CartSidebar";
+import { useCart } from "../../context/CartContext";
 
 // --- ICONS ---
 const CartIcon = ({ className }: { className?: string }) => (

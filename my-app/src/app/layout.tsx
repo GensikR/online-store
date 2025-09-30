@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Footer from "./components/Footer";
+import Footer from "./components/front/Footer";
 import { CartProvider } from "./context/CartContext";
 
 export const metadata: Metadata = {

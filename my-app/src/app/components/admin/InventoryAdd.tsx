@@ -2,9 +2,7 @@
 
 import { useState } from "react";
 
-type Props = {
-  goBack: () => void;
-};
+type Props = { goBack: () => void };
 
 export default function InventoryAdd({ goBack }: Props) {
   const [name, setName] = useState("");
@@ -69,42 +67,41 @@ export default function InventoryAdd({ goBack }: Props) {
   const addImageField = () => setImages([...images, ""]);
 
   return (
-    <div className="max-w-lg mx-auto p-4 border rounded shadow flex flex-col gap-4">
-      <h2 className="text-2xl font-bold">Add Product</h2>
-
+    <div className="max-w-lg mx-auto bg-white rounded-2xl shadow-2xl p-8 flex flex-col gap-4 mt-8">
+      <h2 className="text-2xl font-bold text-gray-800 text-center">Add Product</h2>
       <input
         type="text"
         placeholder="Name"
         value={name}
         onChange={(e) => setName(e.target.value)}
-        className="border p-2 rounded"
+        className="border rounded-lg p-3 focus:ring-2 focus:ring-green-500 outline-none text-gray-700"
       />
       <input
         type="text"
         placeholder="Description"
         value={description}
         onChange={(e) => setDescription(e.target.value)}
-        className="border p-2 rounded"
+        className="border rounded-lg p-3 focus:ring-2 focus:ring-green-500 outline-none text-gray-700"
       />
       <textarea
         placeholder="Details"
         value={details}
         onChange={(e) => setDetails(e.target.value)}
-        className="border p-2 rounded"
+        className="border rounded-lg p-3 focus:ring-2 focus:ring-green-500 outline-none text-gray-700"
       />
       <input
         type="number"
         placeholder="Price"
         value={price}
         onChange={(e) => setPrice(e.target.value)}
-        className="border p-2 rounded"
+        className="border rounded-lg p-3 focus:ring-2 focus:ring-green-500 outline-none text-gray-700"
       />
       <input
         type="number"
         placeholder="Quantity"
         value={quantity}
         onChange={(e) => setQuantity(e.target.value)}
-        className="border p-2 rounded"
+        className="border rounded-lg p-3 focus:ring-2 focus:ring-green-500 outline-none text-gray-700"
       />
 
       <div className="flex flex-col gap-2">
@@ -116,30 +113,30 @@ export default function InventoryAdd({ goBack }: Props) {
             placeholder={`Image URL ${i + 1}`}
             value={img}
             onChange={(e) => handleImageChange(i, e.target.value)}
-            className="border p-2 rounded"
+            className="border rounded-lg p-3 focus:ring-2 focus:ring-green-500 outline-none text-gray-700"
           />
         ))}
         <button
           onClick={addImageField}
-          className="bg-gray-600 text-white px-3 py-1 rounded hover:bg-gray-700"
+          className="bg-gray-600 text-white px-4 py-2 rounded-lg shadow hover:bg-gray-700 transition-all mt-2"
         >
           Add Another Image
         </button>
       </div>
 
-      {error && <p className="text-red-500">{error}</p>}
-      {success && <p className="text-green-500">{success}</p>}
+      {error && <p className="text-red-500 text-center">{error}</p>}
+      {success && <p className="text-green-500 text-center">{success}</p>}
 
-      <div className="flex gap-4 mt-2">
+      <div className="flex gap-4 mt-4 justify-center">
         <button
           onClick={handleAdd}
-          className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+          className="bg-green-600 text-white px-6 py-3 rounded-xl shadow-lg hover:bg-green-700 transition-all"
         >
           Add Product
         </button>
         <button
           onClick={goBack}
-          className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700"
+          className="bg-gray-600 text-white px-6 py-3 rounded-xl shadow-lg hover:bg-gray-700 transition-all"
         >
           Back
         </button>

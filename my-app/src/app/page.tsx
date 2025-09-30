@@ -7,6 +7,7 @@ import Nav from "./components/front/Nav";
 import ProductsReel from "./components/front/ProductsReel";
 import ProductView from "./components/front/ProductView";
 import { Product } from "@/types";
+import Footer from "./components/front/Footer";
 
 export default function Home() {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
@@ -45,6 +46,9 @@ export default function Home() {
           )}
         </main>
       </div>
+      <Footer/>
     </CartProvider>
+    
+    
   );
 }

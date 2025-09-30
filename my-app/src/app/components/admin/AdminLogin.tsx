@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { FirebaseError } from "firebase/app";
 import { auth } from "@/app/lib/firebase";
 
 export default function AdminLogin() {
@@ -14,8 +15,13 @@ export default function AdminLogin() {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       setError("");
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      if (err instanceof FirebaseError) {
+        setError(err.message);
+      } else {
+        setError("An unexpected error occurred");
+        console.error(err);
+      }
     }
   };
 

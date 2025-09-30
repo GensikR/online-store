@@ -29,10 +29,9 @@ export default function ManageProducts({ goBack }: Props) {
     try {
       const res = await fetch("/api/inventory/get-products");
       const data = await res.json();
-      // sort by category
       data.sort((a: Product, b: Product) => a.category.localeCompare(b.category));
       setProducts(data);
-    } catch (err) {
+    } catch (err: unknown) {
       console.error(err);
     }
     setLoading(false);
@@ -60,7 +59,8 @@ export default function ManageProducts({ goBack }: Props) {
       } else {
         alert(data.error || "Error updating product");
       }
-    } catch (err) {
+    } catch (err: unknown) {
+      console.error(err);
       alert("Network error");
     }
   };
@@ -77,12 +77,13 @@ export default function ManageProducts({ goBack }: Props) {
       const data = await res.json();
       if (res.ok) fetchProducts();
       else alert(data.error || "Error deleting product");
-    } catch (err) {
+    } catch (err: unknown) {
+      console.error(err);
       alert("Network error");
     }
   };
 
-  const handleChange = (field: keyof Product, value: any) => {
+  const handleChange = (field: keyof Product, value: string | number) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 

@@ -17,7 +17,6 @@ export default function InventoryAdd({ goBack }: Props) {
   const [success, setSuccess] = useState("");
 
   const handleAdd = async () => {
-    // Validate all fields
     if (!name || !description || !details || !price || !quantity || images.some((img) => !img)) {
       setError("Please fill all fields and image URLs");
       setSuccess("");
@@ -44,7 +43,6 @@ export default function InventoryAdd({ goBack }: Props) {
       if (res.ok) {
         setSuccess("Product added successfully!");
         setError("");
-        // Clear form
         setName("");
         setDescription("");
         setDetails("");
@@ -55,7 +53,8 @@ export default function InventoryAdd({ goBack }: Props) {
         setError(data.error || "Error adding product");
         setSuccess("");
       }
-    } catch (err) {
+    } catch (err: unknown) {
+      console.error(err);
       setError("Network error");
       setSuccess("");
     }

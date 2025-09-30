@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { CartProvider } from "@/app/context/CartContext";
 import LandingHero from "./components/front/LandingHero";
 import Nav from "./components/front/Nav";
 import ProductsReel from "./components/front/ProductsReel";
@@ -11,37 +12,39 @@ export default function Home() {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
   return (
-    <div>
-      <Nav />
+    <CartProvider>
+      <div>
+        <Nav />
 
-      <main className="pt-20">
-        <LandingHero />
+        <main className="pt-20">
+          <LandingHero />
 
-        <ProductsReel
-          category="Clothing"
-          onSelectProduct={(product: Product) => setSelectedProduct(product)}
-        />
-        <ProductsReel
-          category="Shoes"
-          onSelectProduct={(product: Product) => setSelectedProduct(product)}
-        />
-        <ProductsReel
-          category="Accessories"
-          onSelectProduct={(product: Product) => setSelectedProduct(product)}
-        />
+          <ProductsReel
+            category="Clothing"
+            onSelectProduct={(product: Product) => setSelectedProduct(product)}
+          />
+          <ProductsReel
+            category="Shoes"
+            onSelectProduct={(product: Product) => setSelectedProduct(product)}
+          />
+          <ProductsReel
+            category="Accessories"
+            onSelectProduct={(product: Product) => setSelectedProduct(product)}
+          />
 
-        {/* Overlay the product view on top */}
-        {selectedProduct && (
-          <div className="fixed inset-0 z-50 bg-black/50 flex justify-center items-start pt-20">
-            <div className="relative w-full max-w-7xl p-4">
-              <ProductView
-                product={selectedProduct}
-                onClose={() => setSelectedProduct(null)}
-              />
+          {/* Overlay the product view */}
+          {selectedProduct && (
+            <div className="fixed inset-0 z-50 bg-black/50 flex justify-center items-start pt-20">
+              <div className="relative w-full max-w-7xl p-4">
+                <ProductView
+                  product={selectedProduct}
+                  onClose={() => setSelectedProduct(null)}
+                />
+              </div>
             </div>
-          </div>
-        )}
-      </main>
-    </div>
+          )}
+        </main>
+      </div>
+    </CartProvider>
   );
 }
